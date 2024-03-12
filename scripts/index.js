@@ -12,14 +12,21 @@ const cardTemplate = document.querySelector('#card-template').content;
 function deleteCard(element) {
   element.remove();
 };
-function addCards(element) {
-  const placesItem = cardTemplate.querySelector('.places__item').cloneNode(true);
-  const deleteButton = placesItem.querySelector('.card__delete-button');
-  placesItem.querySelector('.card__image').src = element.link;
-  placesItem.querySelector('.card__title').textContent = element.name;  
+function createCard(element,{deleteCard}) {
+  const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
+  const cardImage = cardElement.querySelector('.card__image');
+  const cardName = cardElement.querySelector('.card__title');
+  const deleteButton = cardElement.querySelector('.card__delete-button');
+  cardImage.src = element.link;
+  cardName.textContent = element.name;
+  cardImage.alt = element.name;
   deleteButton.addEventListener('click', function () {
-    deleteCard(placesItem);
+    deleteCard(cardElement);
   });
-  return placesList.append(placesItem);
+  return cardElement;
+}
+function addCard(element) {
+  placesItem = createCard(element,{deleteCard});
+  placesList.append(placesItem);
 };
-initialCards.forEach(addCards);
+initialCards.forEach(addCard);
