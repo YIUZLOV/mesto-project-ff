@@ -26,7 +26,7 @@ function createCard(element,{deleteCard}) {
   return cardElement;
 }
 function addCard(element) {
-  placesItem = createCard(element,{deleteCard});
+  const placesItem = createCard(element,{deleteCard});
   placesList.append(placesItem);
 };
 initialCards.forEach(addCard);
