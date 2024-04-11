@@ -8,8 +8,9 @@
 
 // @todo: Вывести карточки на страницу
 import '../pages/index.css';
-import { initialCards, createCard, deleteCard, likeCard } from './cards.js';
-import { openModal, closeModal, closeKeyEsc, closeMouseClick } from './modal.js';
+import { initialCards } from './cards.js';
+import { createCard, deleteCard, likeCard } from './card.js';
+import { openModal, closeModal, closeMouseClick } from './modal.js';
 
 const placesList = document.querySelector('.places__list');
 
@@ -33,62 +34,85 @@ const newCardForm = document.querySelector('form[name="new-place"]');
 const nameInputCard = newCardForm.querySelector('.popup__input_type_card-name');
 const urlInputCard = newCardForm.querySelector('.popup__input_type_url');
 
+const popupFormImage = document.querySelector('.popup_type_image');
+const popupImageClose = popupFormImage.querySelector('.popup__close');
+const popupImage = popupFormImage.querySelector('.popup__image');
+const popupCaption = popupFormImage.querySelector('.popup__caption');
+
 //функция создания новой карточки
 function createNewCard(evt) {
   evt.preventDefault();
   initialCards.unshift({
     name: nameInputCard.value,
     link: urlInputCard.value
-  })
-  const newCard = createCard(initialCards[0],{deleteCard},{openModal},{closeModal}, {likeCard});
+  });
+  const newCard = createCard(initialCards[0],{ closeModal}, {likeCard}, {handleOpenPopupImage});
   placesList.prepend(newCard);
   nameInputCard.value = '';
   urlInputCard.value = '';
   closeModal(popupNewCard);
-}
+};
 
 //функция добавления карточек
 function addCard(element) {
-  const placesItem = createCard(element,{deleteCard},{openModal},{closeModal}, {likeCard});
+  const placesItem = createCard(element, {closeModal}, {likeCard}, {handleOpenPopupImage});
   placesList.append(placesItem);
 };
 
 //функция редактирования данных профиля
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closeModal(popupEdit);
 };
 
+//функция обработчик Submit
+function handleButtonSubmit(nameForm, nameFunction) {
+  nameForm.addEventListener('submit', nameFunction);
+};
+
+//функция обработчик закрытия модального окна
+function handleClosePopup(buttonClose, namePopup) {
+  buttonClose.addEventListener('click', () => {
+    closeModal(namePopup);
+  })
+};
+
+//функция обработчик закрытия Popup по оверлею
+function handleClosePopupClickMouse(namePopup) {
+  namePopup.addEventListener('click', (evt) => {
+    closeMouseClick(evt);
+  });
+};
+
+// функция обработчик окткрытия Popup  с изображением
+function handleOpenPopupImage(namePopup, link, caption) {
+  namePopup.addEventListener('click', () => {
+    openModal(popupFormImage);
+    popupImage.src = link.src;
+    popupImage.alt = caption.textContent;
+    popupCaption.textContent = caption.textContent;
+    handleClosePopup(popupImageClose, popupFormImage);
+    handleClosePopupClickMouse(popupFormImage);
+  });
+};
+
 buttonEdit.addEventListener('click', () => {
   openModal(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  formElement.addEventListener('submit', handleFormSubmit);
-  popupEditClose.addEventListener('click', () => {
-    closeModal(popupEdit);
-  });
+  handleButtonSubmit(formElement, handleProfileFormSubmit);
+  handleClosePopup(popupEditClose, popupEdit);
+  handleClosePopupClickMouse(popupEdit);
 });
 
 buttonAddCard.addEventListener('click', () => {
   openModal(popupNewCard);
-  newCardForm.addEventListener('submit', createNewCard);
-  popupNewCardClose.addEventListener('click', () => {
-    closeModal(popupNewCard);
-  });
+  handleButtonSubmit(newCardForm, createNewCard);
+  handleClosePopup(popupNewCardClose, popupNewCard);
+  handleClosePopupClickMouse(popupNewCard);
 });
-
-document.addEventListener('keydown', (evt) => {
-  const openPopupAll = document.querySelector('.popup_is-opened');
-  if (openPopupAll) {
-    closeKeyEsc(evt)
-  };
-});
-
-document.addEventListener('click', (evt) => {
-  closeMouseClick(evt);
-})
 
 initialCards.forEach(addCard);
 

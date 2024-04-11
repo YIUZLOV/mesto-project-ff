@@ -1,12 +1,24 @@
 //функция открытия модального окна
 function openModal(namePopup) {
   namePopup.classList.add('popup_is-opened');
+  document.addEventListener('keydown', (evt) => {
+    const openPopupAll = document.querySelector('.popup_is-opened');
+    if (openPopupAll) {
+      closeKeyEsc(evt)
+    };
+  });
 };
 
 //функция закрытия модального окна
 function closeModal(namePopup) {
   namePopup.classList.remove('popup_is-opened');
-}
+  document.removeEventListener('keydown', (evt) => {
+    const openPopupAll = document.querySelector('.popup_is-opened');
+    if (openPopupAll) {
+      closeKeyEsc(evt)
+    };
+  });
+};
 
 //фунция закрытия модального окна ESC
 function closeKeyEsc(evt) {
@@ -14,7 +26,7 @@ function closeKeyEsc(evt) {
     const openPopup = document.querySelector('.popup_is-opened')
     closeModal(openPopup)
   };
-}
+};
 
 //функция закрытия модального окна мышью
 function closeMouseClick(evt) {
@@ -24,4 +36,4 @@ function closeMouseClick(evt) {
   };
 };
 
-export {openModal, closeModal, closeKeyEsc, closeMouseClick};
+export {openModal, closeModal, closeMouseClick};
