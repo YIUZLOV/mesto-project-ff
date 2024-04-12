@@ -11,7 +11,7 @@ function likeCard(buttonLike) {
 };
 
 //функция создания карточки
-function createCard(element, {deleteCard}, {likeCard}, {handleOpenPopupImage}) {
+function createCard(element, deleteCard, likeCard, handleOpenPopupImage) {
   const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardName = cardElement.querySelector('.card__title');
