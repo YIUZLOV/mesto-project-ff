@@ -1,0 +1,15 @@
+.form__input-error {
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 0;
+  width: inherit;
+  height: 20px;
+  font-size: 12px;
+  color: rgb(255, 0, 0);
+  opacity: 0;
+}
+
+.form__input-error-active {
+  opacity: 1;
+}

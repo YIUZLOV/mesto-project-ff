@@ -26,4 +26,13 @@ function closeMouseClick(evt) {
   };
 };
 
-export {openModal, closeModal, closeMouseClick};
+//функция изменения кнопки при отправке данных на сервер
+function renderLoading(status, buttonPopup) {
+  if (status) {
+    buttonPopup.textContent = 'Сохранение...'
+  } else {
+    buttonPopup.textContent = 'Сохранить'
+  }
+};
+
+export {openModal, closeModal, closeMouseClick, renderLoading };
