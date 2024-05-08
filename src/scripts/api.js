@@ -13,10 +13,6 @@ const handleResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-const handleError = (err) => {
-  console.log(err)
-};
-
 // GET запрос данных пользователя
 const loadingUserData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
@@ -34,17 +30,16 @@ const loadingCardData = () => {
 };
 
 // PATCH запрос для отправки данных пользователя на сервер
-const saveDataUser = (name, job) => {
+const saveDataUser = (dataProfile) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify ({
-      name: name.textContent,
-      about: job.textContent
+      name: dataProfile.name,
+      about: dataProfile.job
     })
   })
     .then(handleResponse)
-    .catch(handleError)
 };
 
 // PATCH запрос для отправки аватара пользователя на сервер
@@ -57,7 +52,6 @@ const saveAvatarUser = (newAvatar) => {
     })
   })
     .then(handleResponse)
-    .catch(handleError)
 };
 
 // POST запрос для отправки данных новой карточки на сервер
@@ -71,46 +65,33 @@ const saveDataNewCard = (dataNewCard) => {
     })
   })
     .then(handleResponse)
-    .catch(handleError)
 };
 
 // DELETE запрос для удаления карточки
 const deleteCardOnServer = (idCard) => {
   return fetch(`${config.baseUrl}/cards/${idCard}`, {
     method: 'DELETE',
-    headers: config.headers,
-    body: JSON.stringify ({
-      _id: idCard
-    })
+    headers: config.headers
   })
     .then(handleResponse)
-    .catch(handleError)
 };
 
 //PUT запрос постановки лайка
 const putLikeCard = (idCard) => {
   return fetch(`${config.baseUrl}/cards/likes/${idCard}`, {
     method: 'PUT',
-    headers: config.headers,
-    body: JSON.stringify ({
-      _id: idCard
-    })
+    headers: config.headers
   })
-    .then(handleResponse)
-    .catch(handleError)  
+    .then(handleResponse) 
 };
 
 //DELETE запрос для снятия лайка
 const deleteLikeCard = (idCard) => {
   return fetch(`${config.baseUrl}/cards/likes/${idCard}`, {
     method: 'DELETE',
-    headers: config.headers,
-    body: JSON.stringify ({
-      _id: idCard
-    })
+    headers: config.headers
   })
     .then(handleResponse)
-    .catch(handleError)  
 };
 
 export { 

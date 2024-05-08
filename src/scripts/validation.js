@@ -35,11 +35,16 @@ function hasInvalidInput (inputList, obj) {
   });
 };
 
+// механика переключения кнопки в неактивный режим
+function disableSubmitButton (buttonElement, obj) {
+  buttonElement.disabled = true
+  buttonElement.classList.add(obj.inactiveButtonClass)
+};
+
 //функиция переключения кнопки в неактивный режим, если валидация не пройдена
 function toggleButtonState (inputList, buttonElement, obj) {
   if (hasInvalidInput(inputList, obj)) {
-    buttonElement.disabled = true
-    buttonElement.classList.add(obj.inactiveButtonClass)
+    disableSubmitButton (buttonElement, obj)
   } else {
     buttonElement.disabled = false
     buttonElement.classList.remove(obj.inactiveButtonClass)
@@ -63,8 +68,7 @@ function setEventListeners (formElement, obj) {
 function clearValidation (formElement, obj) {
   const inputList = Array.from(formElement.querySelectorAll(obj.inputSelector));
   const buttonForm = formElement.querySelector(obj.submitButtonSelector);
-  buttonForm.disabled = true
-  buttonForm.classList.add(obj.inactiveButtonClass)
+  disableSubmitButton (buttonForm, obj);
   inputList.forEach((inputElement) => {
     hideInputError(formElement, inputElement, obj);
     inputElement.value = '';

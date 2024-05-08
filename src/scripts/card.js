@@ -6,13 +6,11 @@ function deleteCard(element) {
 };
 
 //функция создания карточки
-function createCard(element, currentId, likeCard, handleDeleteCard, handleOpenPopupImage) {
+function createCard(element, currentId, likeCard, handleOpenPopupConfirmDelete, handleOpenPopupImage) {
   const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardName = cardElement.querySelector('.card__title');
 
-  const popupDeleteCard = document.querySelector('.popup_type_delete-card');
-  const popupDeleteCardButton = popupDeleteCard.querySelector('.popup__button');
   const idCard = element._id;
 
   const deleteButton = cardElement.querySelector('.card__delete-button');
@@ -34,7 +32,7 @@ function createCard(element, currentId, likeCard, handleDeleteCard, handleOpenPo
     }
   });
 
-  handleDeleteCard(popupDeleteCard, deleteButton, idCard, cardElement);
+  handleOpenPopupConfirmDelete(deleteButton, idCard, cardElement);
 
   handleOpenPopupImage(cardImage, cardImage, cardName);
 

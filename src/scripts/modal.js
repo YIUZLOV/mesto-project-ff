@@ -12,7 +12,7 @@ function closeModal(namePopup) {
 
 //функция закрытия модального окна ESC
 function closeKeyEsc(evt) {
-  if (evt.keyCode === 27) {
+  if (evt.key === 'Escape') {
     const openPopup = document.querySelector('.popup_is-opened')
     closeModal(openPopup)
   };
@@ -26,13 +26,4 @@ function closeMouseClick(evt) {
   };
 };
 
-//функция изменения кнопки при отправке данных на сервер
-function renderLoading(status, buttonPopup) {
-  if (status) {
-    buttonPopup.textContent = 'Сохранение...'
-  } else {
-    buttonPopup.textContent = 'Сохранить'
-  }
-};
-
-export {openModal, closeModal, closeMouseClick, renderLoading };
+export {openModal, closeModal, closeMouseClick };
